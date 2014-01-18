@@ -8,9 +8,10 @@ namespace Apibeta;
  */
 abstract class Configuration {
 
-    private static $requetesHttps = true;
-    private static $cleAPI = '';
-    private static $cleSecrete = '';
+    protected static $requetesHttps = true;
+    protected static $cleAPI = '';
+    protected static $cleSecrete = '';
+    protected static $token = null;
     
     public static function getRequetesHttps() {
         return static::$requetesHttps;
@@ -36,6 +37,14 @@ abstract class Configuration {
 
     public static function setCleSecrete($cleSecrete) {
         static::$cleSecrete = $cleSecrete;
+    }
+
+    public static function getToken() {
+        return static::$token;
+    }
+
+    public static function setToken($token) {
+        static::$token = $token;
     }
 
 

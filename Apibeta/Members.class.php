@@ -6,17 +6,23 @@ namespace Apibeta;
  * Contient les requêtes concernant les Membres
  * @author TetzPHP
  */
-abstract class Members {
+abstract class Members extends Requete {
 
     /**
      * Récupère un token d'accès avec le code fourni par l'identification OAuth 2.
-     * /!\ Non testé !!!
+     * @important /!\ Non testé !!!
      * @param string $redirect_uri L'adresse de callback que vous aviez déjà renseignée pour la première partie.
      * @param string $code Code récupéré par la première partie de l'identification.
      */
     static public function postAccess_token($redirect_uri, $code) {
         $client_id = \Apibeta\Configuration::getCleAPI();
         $client_secret = \Apibeta\Configuration::getCleSecrete();
+        $parametres = array();
+        $parametres['client_id'] = $client_id;
+        $parametres['client_secret'] = $client_secret;
+        $parametres['redirect_uri'] = $redirect_uri;
+        $parametres['code'] = $code;
+        return static::executer(__METHOD__, $parametres);
     }
 
     /**
@@ -25,9 +31,13 @@ abstract class Members {
      * @param string $password Mot de passe 
      */
     public static function postAuth($login, $password) {
-        if (len($password) !== 32) {
+        if (strlen($password) !== 32) {
             $password = md5($password);
         }
+        $parametres = array();
+        $parametres['login'] = $login;
+        $parametres['password'] = $password;
+        return static::executer(__METHOD__, $parametres);
     }
 
     /**
@@ -35,14 +45,17 @@ abstract class Members {
      * @param file $avatar Image à utiliser pour l'avatar de l'utilisateur.
      */
     public static function postAvatar($avatar) {
-        
+        $parametres = array();
+        $parametres['avatar'] = $avatar;
+        return static::executer(__METHOD__, $parametres);
     }
 
     /**
      * Supprime l'avatar de l'utilisateur identifié.
      */
     public static function deleteAvatar() {
-        
+        $parametres = array();
+        return static::executer(__METHOD__, $parametres);
     }
 
     /**
@@ -50,14 +63,17 @@ abstract class Members {
      * @param int $id ID du membre
      */
     public static function getBadges($id) {
-        
+        $parametres = array();
+        $parametres['id'] = $id;
+        return static::executer(__METHOD__, $parametres);
     }
 
     /**
      * Détruit le token actif.
      */
     public static function postDestroy() {
-        
+        $parametres = array();
+        return static::executer(__METHOD__, $parametres);
     }
 
     /**
@@ -66,14 +82,18 @@ abstract class Members {
      * @param bool $summary N'affiche que les informations et pas les séries / films du compte (Défaut false)
      */
     public static function getInfos($id, $summary = false) {
-        
+        $parametres = array();
+        $parametres['id'] = $id;
+        $parametres['summary'] = $summary;
+        return static::executer(__METHOD__, $parametres);
     }
 
     /**
      * Vérifie que le token est actif.
      */
     public static function getIs_active() {
-        
+        $parametres = array();
+        return static::executer(__METHOD__, $parametres);
     }
 
     /**
@@ -81,7 +101,9 @@ abstract class Members {
      * @param string $find Adresse e-mail ou nom de l'utilisateur
      */
     public static function postLost($find) {
-        
+        $parametres = array();
+        $parametres['find'] = $find;
+        return static::executer(__METHOD__, $parametres);
     }
 
     /**
@@ -93,74 +115,112 @@ abstract class Members {
      * @param bool $auto_delete Suppression automatique des notifications (Facultatif, défaut false)
      */
     public static function getNotifications($since_id = null, $number = null, $sort = null, $types = null, $auto_delete = null) {
-        
+        $parametres = array();
+        if ($since_id !== null) {
+            $parametres['since_id'] = $since_id;
+        }
+        if ($number !== null) {
+            $parametres['number'] = $number;
+        }
+        if ($sort !== null) {
+            $parametres['sort'] = $sort;
+        }
+        if ($types !== null) {
+            $parametres['types'] = $types;
+        }
+        if ($auto_delete !== null) {
+            $parametres['auto_delete'] = $auto_delete;
+        }
+        return static::executer(__METHOD__, $parametres);
     }
 
     /**
      * Identification par OAuth.
      */
     public static function getOauth() {
-        
+        $parametres = array();
+        return static::executer(__METHOD__, $parametres);
     }
 
     /**
      * Identification par OAuth. Renvoie l'utilisateur sur l'URL de callback que vous avez spécifiée dans votre compte avec le paramètre GET token.
      */
     public static function postOauth() {
-        
+        $parametres = array();
+        return static::executer(__METHOD__, $parametres);
     }
-    
+
     /**
      * Modifie ou affiche une option de l'utilisateur.
      * @param string $name Nom de l'option
-     * @param string $value Valeur de l'option
+     * @param string $value Valeur de l'option (Null pour afficher
      */
     public static function postOption($name, $value = null) {
-        
+        $parametres = array();
+        $parametres['name'] = $name;
+        if ($value !== null) {
+            $parametres['value'] = $value;
+        }
+        return static::executer(__METHOD__, $parametres);
     }
 
     /**
      * Récupère les options (sous-titres) du membre.
      */
-    public static function getOptions(){
-        
+    public static function getOptions() {
+        $parametres = array();
+        return static::executer(__METHOD__, $parametres);
     }
-    
+
     /**
      * Recherche des membres.
      * @param string $login Nom de l'utilisateur, 2 caractères minimum
      */
     public static function getSearch($login) {
-        if(len($login) > 1){
+        if (len($login) > 1) {
+            $parametres = array();
+            $parametres['login'] = $login;
+            return static::executer(__METHOD__, $parametres);
+        } else {
             
         }
     }
-    
+
     /**
      * Crée un nouveau compte membre sur BetaSeries.
      * @param string $login
      * @param string $email
      * @param string $password
      */
-    public static function postSignup($login, $email, $password = null){
+    public static function postSignup($login, $email, $password = null) {
         if ($password !== null && len($password) !== 32) {
             $password = md5($password);
         }
+        $parametres = array();
+        $parametres['login'] = $login;
+        $parametres['email'] = $email;
+        $parametres['password'] = $password;
+        return static::executer(__METHOD__, $parametres);
     }
-    
+
     /**
      * Cherche les membres parmi les amis du compte.
      * @param array $mails Tableau POST des adresses e-mail à chercher
      */
     public static function postSync($mails) {
-        
+        $parametres = array();
+        $parametres['mails'] = $mails;
+        return static::executer(__METHOD__, $parametres);
     }
-    
+
     /**
      * Retourne les possibilités de noms d'utilisateur libres sur BetaSeries.
      * @param string $username Nom d'utilisateur
      */
-    public static function getUsername($username){
-        
+    public static function getUsername($username) {
+        $parametres = array();
+        $parametres['username'] = $username;
+        return static::executer(__METHOD__, $parametres);
     }
+
 }

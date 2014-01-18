@@ -6,7 +6,7 @@ namespace Apibeta;
  * Contient les requêtes concernant les épisodes
  * @author TetzPHP
  */
-abstract class Episodes {
+abstract class Episodes extends Requete {
 
     const SUBTITLES_ALL = 'all';
     const SUBTITLES_VOVF = 'vovf';
@@ -20,7 +20,17 @@ abstract class Episodes {
      * @param bool $subtitles Affiche les sous-titres (Ne pas afficher = null)
      */
     public static function getDisplay($id = null, $thetvdb_id = null, $subtitles = null) {
-        
+        $parametres = array();
+        if ($id !== null) {
+            $parametres['id'] = $id;
+        }
+        if ($thetvdb_id !== null) {
+            $parametres['thetvdb_id'] = $thetvdb_id;
+        }
+        if ($subtitles !== null) {
+            $parametres['subtitles'] = $subtitles;
+        }
+        return static::executer(__METHOD__, $parametres);
     }
 
     /**
@@ -29,7 +39,14 @@ abstract class Episodes {
      * @param int $thetvdb_id ID de l'épisode sur TheTVDB (Facultatif si id renseigné)
      */
     public static function postDownloaded($id = null, $thetvdb_id = null) {
-        
+        $parametres = array();
+        if ($id !== null) {
+            $parametres['id'] = $id;
+        }
+        if ($thetvdb_id !== null) {
+            $parametres['thetvdb_id'] = $thetvdb_id;
+        }
+        return static::executer(__METHOD__, $parametres);
     }
 
     /**
@@ -38,7 +55,14 @@ abstract class Episodes {
      * @param int $thetvdb_id ID de l'épisode sur TheTVDB (Facultatif si id renseigné)
      */
     public static function deleteDownloaded($id = null, $thetvdb_id = null) {
-        
+        $parametres = array();
+        if ($id !== null) {
+            $parametres['id'] = $id;
+        }
+        if ($thetvdb_id !== null) {
+            $parametres['thetvdb_id'] = $thetvdb_id;
+        }
+        return static::executer(__METHOD__, $parametres);
     }
 
     /**
@@ -49,7 +73,20 @@ abstract class Episodes {
      * @param int $userId ID du membre (Facultatif, par défaut membre identifié)
      */
     public static function getList($subtitles = null, $limit = null, $showId = null, $userId = null) {
-        
+        $parametres = array();
+        if ($subtitles !== null) {
+            $parametres['subtitles'] = $subtitles;
+        }
+        if ($limit !== null) {
+            $parametres['limit'] = $limit;
+        }
+        if ($showId !== null) {
+            $parametres['showId'] = $showId;
+        }
+        if ($userId !== null) {
+            $parametres['userId'] = $userId;
+        }
+        return static::executer(__METHOD__, $parametres);
     }
 
     /**
@@ -59,7 +96,15 @@ abstract class Episodes {
      * @param int $thetvdb_id ID de l'épisode sur TheTVDB (Facultatif si id renseigné)
      */
     public static function postNote($note, $id = null, $thetvdb_id = null) {
-        
+        $parametres = array();
+        $parametres['note'] = $note;
+        if ($id !== null) {
+            $parametres['id'] = $id;
+        }
+        if ($thetvdb_id !== null) {
+            $parametres['thetvdb_id'] = $thetvdb_id;
+        }
+        return static::executer(__METHOD__, $parametres);
     }
 
     /**
@@ -68,7 +113,14 @@ abstract class Episodes {
      * @param int $thetvdb_id ID de l'épisode sur TheTVDB (Facultatif si id renseigné)
      */
     public static function deleteNote($id = null, $thetvdb_id = null) {
-        
+        $parametres = array();
+        if ($id !== null) {
+            $parametres['id'] = $id;
+        }
+        if ($thetvdb_id !== null) {
+            $parametres['thetvdb_id'] = $thetvdb_id;
+        }
+        return static::executer(__METHOD__, $parametres);
     }
 
     /**
@@ -76,7 +128,9 @@ abstract class Episodes {
      * @param string $nomFichier Nom du fichier à traiter
      */
     public static function getScrapper($nomFichier) {
-        
+        $parametres = array();
+        $parametres['nomFichier'] = $nomFichier;
+        return static::executer(__METHOD__, $parametres);
     }
 
     /**
@@ -86,7 +140,11 @@ abstract class Episodes {
      * @param string $subtitles Si spécifié, retourne les sous-titres des épisodes
      */
     public static function getSearch($show_id, $number, $subtitles = null) {
-        
+        $parametres = array();
+        $parametres['show_id'] = $show_id;
+        $parametres['number'] = $number;
+        $parametres['subtitles'] = $subtitles;
+        return static::executer(__METHOD__, $parametres);
     }
 
     /**
@@ -98,7 +156,23 @@ abstract class Episodes {
      * @param int $note  Si la note est spécifiée entre 1 et 5, donne une note à l'épisode
      */
     public static function postWatched($id = null, $thetvdb_id = null, $bulk = null, $delete = null, $note = null) {
-        
+        $parametres = array();
+        if ($id !== null) {
+            $parametres['id'] = $id;
+        }
+        if ($thetvdb_id !== null) {
+            $parametres['thetvdb_id'] = $thetvdb_id;
+        }
+        if ($bulk !== null) {
+            $parametres['bulk'] = $bulk;
+        }
+        if ($delete !== null) {
+            $parametres['delete'] = $delete;
+        }
+        if ($note !== null) {
+            $parametres['note'] = $note;
+        }
+        return static::executer(__METHOD__, $parametres);
     }
 
     /**
@@ -107,7 +181,14 @@ abstract class Episodes {
      * @param int $thetvdb_id ID de l'épisode sur TheTVDB (Facultatif si id renseigné)
      */
     public static function deleteWatched($id = null, $thetvdb_id = null) {
-        
+        $parametres = array();
+        if ($id !== null) {
+            $parametres['id'] = $id;
+        }
+        if ($thetvdb_id !== null) {
+            $parametres['thetvdb_id'] = $thetvdb_id;
+        }
+        return static::executer(__METHOD__, $parametres);
     }
 
 }
