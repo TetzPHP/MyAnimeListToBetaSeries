@@ -26,7 +26,14 @@ abstract class Comments {
      * @return Commentaire
      */
     public static function postComment($type, $id, $text, $in_reply_to = null) {
-        return new Commentaire($retour);
+        $parametres = array();
+        $parametres['type'] = $type;
+        $parametres['id'] = $id;
+        $parametres['text'] = $text;
+        if ($in_reply_to !== null) {
+            $parametres['in_reply_to'] = $in_reply_to;
+        }
+        return static::executer(__METHOD__, $parametres);
     }
 
     /**
@@ -35,7 +42,9 @@ abstract class Comments {
      * @return Commentaire
      */
     public static function deleteComment($id) {
-        return new Commentaire($retour);
+        $parametres = array();
+        $parametres['id'] = $id;
+        return static::executer(__METHOD__, $parametres);
     }
 
     /**
@@ -48,7 +57,17 @@ abstract class Comments {
      * @return Commentaire[]
      */
     public static function getComments($type, $id, $nbpp, $since_id = null, $order = Comments::ORDER_ASC) {
-        
+        $parametres = array();
+        $parametres['type'] = $type;
+        $parametres['id'] = $id;
+        $parametres['nbpp'] = $nbpp;
+        if ($since_id !== null) {
+            $parametres['since_id'] = $since_id;
+        }
+        if ($order !== null) {
+            $parametres['order'] = $order;
+        }
+        return static::executer(__METHOD__, $parametres);
     }
 
     /**
@@ -58,7 +77,10 @@ abstract class Comments {
      * @return bool
      */
     public static function postSubscription($type, $id) {
-        
+        $parametres = array();
+        $parametres['type'] = $type;
+        $parametres['id'] = $id;
+        return static::executer(__METHOD__, $parametres);
     }
 
     /**
@@ -68,7 +90,10 @@ abstract class Comments {
      * @return bool
      */
     public static function deleteSubscription($type, $id) {
-        
+        $parametres = array();
+        $parametres['type'] = $type;
+        $parametres['id'] = $id;
+        return static::executer(__METHOD__, $parametres);
     }
 
 }
