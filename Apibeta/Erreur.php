@@ -6,13 +6,15 @@ namespace Apibeta;
  * Ceci est une classe d'exception, elle est lancée lorsqu'une erreure est sourvenue.
  * @author TetzPHP
  */
-class Erreur extends \Exception {
+class Erreur extends \Exception
+{
+
     // Erreur Transport
     const CODE_ERREUR_PASDEREPONSE = 1;
     const TEXT_ERREUR_PASDEREPONSE = 'Impossible de communiquer avec le site BetaSeries. Merci de réessayer ultérieurement.';
-    
+    const CODE_ERREUR_PASDACTION = 2;
+    const TEXT_ERREUR_PASDACTION = 'Impossible de résoudre l\'action demandée.';
     const TEXT_ERREUR_NON_AFFICHABLE = 'Nous avons rencontré une erreur. Merci de réassayer plus tard, si l\'erreur persiste, merci de contacter le webmaster.';
-    
     // Erreur API
     const CODE_API_CLE_INVALIDE = 1001;
     const TEXT_API_CLE_INVALIDE = 'Clé API Invalide';
@@ -22,7 +24,7 @@ class Erreur extends \Exception {
     const TEXT_API_ACTION_INVALIDE = 'Action invalide';
     // Erreur Utilisateur
     const CODE_USER_TOKEN_INALIDE = 2001;
-    const TEXT_USER_TOKEN_INALIDE  = "Token utilisateur invalide.";
+    const TEXT_USER_TOKEN_INALIDE = "Token utilisateur invalide.";
     const CODE_USER_NONAUTHORISE = 2002;
     const TEXT_USER_NONAUTHORISE = "Les réglages vie privée de l'utilisateur ne permettent pas l'action";
     const CODE_USER_SERIEDEJAPRESENTE = 2003;
@@ -31,7 +33,7 @@ class Erreur extends \Exception {
     const TEXT_USER_SERIENONPRESENTE = "La série n'est pas dans le compte utilisateur";
     const CODE_USER_EPISODENONVU = 2005;
     const TEXT_USER_EPISODENONVU = "L'utilisateur n'a pas vu cet épisode";
-    const CODE_USER_PASAMIS= 2006;
+    const CODE_USER_PASAMIS = 2006;
     const TEXT_USER_PASAMIS = "Les deux utilisateurs ne sont pas amis";
     const CODE_USER_OPTION_INVALIDE = 2007;
     const TEXT_USER_OPTION_INVALIDE = "Les options de l'utilisateur ne sont pas valides";
@@ -57,12 +59,13 @@ class Erreur extends \Exception {
     const TEXT_BDD_WRONGPASSWORD = "Mauvais mot de passe";
     const CODE_BDD_USER_EXISTE = 4004;
     const TEXT_BDD_USER_EXISTE = "L'utilisateur existe déjà";
-    
+
     /**
      * Fonction permettant de savoir si le message d'erreur doit être/peut être affiché pas l'utilisateur
      * @return bool
      */
-    public function affichableUser(){
+    public function affichableUser()
+    {
         $code = parent::getCode();
         return ($code == static::CODE_ERREUR_PASDEREPONSE || $code > static::CODE_USER_TOKEN_INALIDE && $code < static::CODE_VAR_MANQUANTE || $code == static::CODE_VAR_EMAIL_INVALIDE || $code > static::CODE_BDD_NOUSER);
     }

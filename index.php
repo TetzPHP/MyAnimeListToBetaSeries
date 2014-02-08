@@ -1,28 +1,41 @@
 <?php
 
-function __autoload($class_name) {
-    include $class_name . '.class.php';
-}
+use Apibeta\Configuration;
+use Apibeta\Erreur;
+use Apibeta\Requete\Members;
 
+header('Content-Type: text/html; charset=utf-8');
+
+function __autoload($class_name)
+{
+    include $class_name . '.php';
+}
 #Hypothèse d'utilisation
-\Apibeta\Configuration::setCleAPI('MaClé');
+Configuration::setCleAPI('');
 if (isset($_GET['token']) && !empty($_GET['token'])) {
-    \Apibeta\Configuration::setToken($_GET['token']);
+    Configuration::setToken($_GET['token']);
 } else {
     #Identification de l'utilisateur
     try {
-        $postAuth = \Apibeta\Members::postAuth('Dev088', 'developer');
+        $postAuth = Members::postAuth('', '');
         if (!empty($postAuth['token'])) {
-            \Apibeta\Configuration::setToken($postAuth['token']);
+            Configuration::setToken($postAuth['token']);
         }
-    } catch (\Apibeta\Erreur $e) {
-        if($e->affichableUser()){
+    } catch (Erreur $e) {
+        if ($e->affichableUser()) {
             echo $e->getMessage();
-        }else{
-            echo \Apibeta\Erreur::TEXT_ERREUR_NON_AFFICHABLE;
+        } else {
+            echo Erreur::TEXT_ERREUR_NON_AFFICHABLE;
         }
     }
 }
-var_dump(\Apibeta\Configuration::getToken());
-#Ma liste d'épisodes à regarder
-var_dump(\Apibeta\Episodes::getList());
+
+try {
+    $mesInfos = Members::getInfos();
+} catch (Erreur $e) {
+    if ($e->affichableUser()) {
+        echo $e->getMessage();
+    } else {
+        echo Erreur::TEXT_ERREUR_NON_AFFICHABLE;
+    }
+}
