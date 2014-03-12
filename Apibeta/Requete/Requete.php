@@ -43,6 +43,7 @@ abstract class Requete
         $header[] = 'Accept: application/json';
         $header[] = 'X-BetaSeries-Version: 2.2';
         $optionsCurl[CURLOPT_HTTPHEADER] = $header;
+        $optionsCurl[CURLOPT_USERAGENT] = Configuration::getUserAgent();
         $optionsCurl[CURLOPT_RETURNTRANSFER] = true;
         $optionsCurl[CURLOPT_SSL_VERIFYHOST] = false; //Problème de vérification de certificat sous Windows
         $optionsCurl[CURLOPT_SSL_VERIFYPEER] = false;

@@ -14,7 +14,6 @@ abstract class Members extends Requete
 
     /**
      * Récupère un token d'accès avec le code fourni par l'identification OAuth 2.
-     * @important /!\ Non testé !!!
      * @param string $redirect_uri L'adresse de callback que vous aviez déjà renseignée pour la première partie.
      * @param string $code Code récupéré par la première partie de l'identification.
      */

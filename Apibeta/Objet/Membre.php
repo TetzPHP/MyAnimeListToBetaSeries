@@ -9,6 +9,18 @@ namespace Apibeta\Objet;
 class Membre extends Generique
 {
 
+    /** Tout le monde peut m'ajouter comme ami */
+    const FRIEND_OPEN = 'open';
+
+    /** Je dois approuver chaque demande d'amitié */
+    const FRIEND_REQUESTS = 'requests';
+
+    /** Seuls mes amis peuvent par la suite m'ajouter */
+    const FRIEND_FRIENDS = 'friends';
+
+    /** Personne ne peut m'ajouter comme ami */
+    const FRIEND_NOBODY = 'nobody';
+
     protected $id;
     protected $login;
     protected $xp;
@@ -19,6 +31,81 @@ class Membre extends Generique
     protected $shows;
     protected $movies;
     protected $options;
+    private $downloaded;
+    private $notation;
+    private $timelag;
+    private $global;
+    private $friendship;
+
+    /**
+     * 
+     * @return bool
+     */
+    public function getDownloaded()
+    {
+        return $this->downloaded;
+    }
+
+    /**
+     * Me demander une note aux épisodes que je viens de voir
+     * @return bool
+     */
+    public function getNotation()
+    {
+        return $this->notation;
+    }
+
+    /**
+     * Décaler les dates d'une journée pour correspondre à la sortie française
+     * @return bool
+     */
+    public function getTimelag()
+    {
+        return $this->timelag;
+    }
+
+    /**
+     * Afficher le numéro global à côté du titre des épisodes (utile pour les mangas)
+     * @return bool
+     */
+    public function getGlobal()
+    {
+        return $this->global;
+    }
+
+    /**
+     * Manière dont vous voulez gérer vos amitiés sur BetaSerie | voir const FRIEND_*
+     * @return string
+     */
+    public function getFriendship()
+    {
+        return $this->friendship;
+    }
+
+    private function setDownloaded($downloaded)
+    {
+        $this->downloaded = $downloaded;
+    }
+
+    private function setNotation($notation)
+    {
+        $this->notation = $notation;
+    }
+
+    private function setTimelag($timelag)
+    {
+        $this->timelag = $timelag;
+    }
+
+    private function setGlobal($global)
+    {
+        $this->global = $global;
+    }
+
+    private function setFriendship($friendship)
+    {
+        $this->friendship = $friendship;
+    }
 
     public function getId()
     {
@@ -73,6 +160,10 @@ class Membre extends Generique
         return $this->movies;
     }
 
+    /**
+     * Retourne le tableau des options de l'utilisateur | Voir les propriétés privées de cette classe
+     * @return array
+     */
     public function getOptions()
     {
         return $this->options;
@@ -113,10 +204,6 @@ class Membre extends Generique
         $this->stats = $stats;
     }
 
-    /**
-     * 
-     * @param array $shows
-     */
     protected function setShows($shows)
     {
         $this->shows = Serie::tableau($shows);
@@ -130,5 +217,11 @@ class Membre extends Generique
     protected function setOptions($options)
     {
         $this->options = $options;
+        foreach ($options as $key => $value) {
+            $method = 'set' . ucfirst($key);
+            if (method_exists($this, $method)) {
+                $this->$method($value);
+            }
+        }
     }
 }

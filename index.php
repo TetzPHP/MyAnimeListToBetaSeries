@@ -1,19 +1,19 @@
 <?php
 
+spl_autoload_register();
+
 use Apibeta\Configuration;
 use Apibeta\Erreur;
 use Apibeta\Requete\Members;
 
 header('Content-Type: text/html; charset=utf-8');
 
-function __autoload($class_name)
-{
-    include $class_name . '.php';
-}
 #Hypothèse d'utilisation
 Configuration::setCleAPI('');
-if (isset($_GET['token']) && !empty($_GET['token'])) {
-    Configuration::setToken($_GET['token']);
+Configuration::setCleSecrete('');
+//Configuration::setUserAgent('ApiBetaPhp5'); #Personalisation du UserAgent
+if (isset($_COOKIE[Configuration::getUserAgent()]) && !empty($_COOKIE[Configuration::getUserAgent()])) {
+    Configuration::setToken($_COOKIE[Configuration::getUserAgent()]);
 } else {
     #Identification de l'utilisateur
     try {
@@ -31,7 +31,8 @@ if (isset($_GET['token']) && !empty($_GET['token'])) {
 }
 
 try {
-    $mesInfos = Members::getInfos();
+    $O_membre = Members::getInfos();
+    var_dump($O_membre);
 } catch (Erreur $e) {
     if ($e->affichableUser()) {
         echo $e->getMessage();

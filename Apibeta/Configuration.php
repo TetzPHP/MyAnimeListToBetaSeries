@@ -15,6 +15,7 @@ abstract class Configuration
     protected static $cleAPI = '';
     protected static $cleSecrete = '';
     protected static $token = null;
+    protected static $userAgent = 'ApiBetaPhp5';
 
     public static function getRequetesHttps()
     {
@@ -34,6 +35,16 @@ abstract class Configuration
     public static function getToken()
     {
         return static::$token;
+    }
+
+    public static function getUserAgent()
+    {
+        return static::$userAgent;
+    }
+
+    public static function setUserAgent(string $userAgent)
+    {
+        static::$userAgent = $userAgent;
     }
 
     public static function setRequetesHttps($requetesHttps = true)
