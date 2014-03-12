@@ -1,0 +1,3 @@
+[submodule "ApiBeta"]
+	path = ApiBeta
+	url = https://github.com/TetzPHP/ApiBetaPhp5.git
