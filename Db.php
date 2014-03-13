@@ -9,7 +9,7 @@ abstract class Db
     static public function initPdo()
     {
         if (!isset(static::$pdo)) {
-            static::$pdo = new PDO('sqlite:db.sq3');
+            static::$pdo = new PDO('sqlite:animes.sq3');
             static::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);        
             $sql1 = 'DROP TABLE Animes';
             static::$pdo->query($sql1);

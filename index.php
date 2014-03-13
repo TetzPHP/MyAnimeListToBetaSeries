@@ -1,20 +1,14 @@
 <?php
-
-function __autoload($classname) {
-    if(strpos($classname,'Apibeta\\') !== false){
-        $filename = __DIR__.DIRECTORY_SEPARATOR.'Externe'.DIRECTORY_SEPARATOR.$classname.'.php';
-    }else{
-        $filename = __DIR__.DIRECTORY_SEPARATOR.$classname.'.php';
-    }
-    require_once $filename;
-}
+//autoload
+spl_autoload_register();
 
 use Apibeta\Configuration;
 use Apibeta\Erreur;
 use Apibeta\Requete\Members;
 
 header('Content-Type: text/html; charset=utf-8');
-include 'conf.php';
+include_once 'conf.php';
+
 if (isset($_COOKIE[Configuration::getUserAgent()]) && !empty($_COOKIE[Configuration::getUserAgent()])) {
     Configuration::setToken($_COOKIE[Configuration::getUserAgent()]);
 } else {
