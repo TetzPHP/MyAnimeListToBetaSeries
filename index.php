@@ -20,6 +20,7 @@ if (isset($_COOKIE[Configuration::getUserAgent()]) && !empty($_COOKIE[Configurat
         $postAuth = Members::postAuth('', '');
         if (!empty($postAuth['token'])) {
             Configuration::setToken($postAuth['token']);
+            setcookie(Configuration::getUserAgent(), $postAuth['token']);
         }
     } catch (Erreur $e) {
         if ($e->affichableUser()) {
