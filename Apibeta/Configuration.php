@@ -42,7 +42,7 @@ abstract class Configuration
         return static::$userAgent;
     }
 
-    public static function setUserAgent(string $userAgent)
+    public static function setUserAgent($userAgent)
     {
         static::$userAgent = $userAgent;
     }
